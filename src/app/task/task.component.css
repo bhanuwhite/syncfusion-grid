@@ -1,29 +1,29 @@
-.sortingenabled{
+.sortingenabled {
     width: 95% !important;
     margin: auto;
 }
 
-.headerStyle{    
+.headerStyle {
     background-color: blue;
     height: 90px;
     position: relative;
     top: -23px;
 }
 
-.textStyle{
+.textStyle {
     text-align: center;
     top: 20px;
     position: relative;
     color: white;
 }
 
-.hrStyle{
+.hrStyle {
     position: relative;
     top: -33px;
 }
 
-.frozenStyle{
-    display: flex
+.frozenStyle {
+    display: flex;
 }
 
 @media screen and (max-width: 590px) {
@@ -31,14 +31,14 @@
         margin-top: 30px;
     }
 
-    .headerStyle{    
+    .headerStyle {
         background-color: blue;
         height: 90px;
         position: relative;
-        top: -23px; 
+        top: -23px;
     }
 
-    .frozenStyle{
-        display:inline
+    .frozenStyle {
+        display: inline;
     }
 }

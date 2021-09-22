@@ -1,11 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-// import { dataSource, virtualData, sampleData } from './data';
 import data from '../../assets/data/data.json';
 import { NumericTextBoxComponent } from '@syncfusion/ej2-angular-inputs';
 import { Browser } from '@syncfusion/ej2-base';
 import {
-  TreeGridComponent, FreezeService, PageService, SortService, FilterService, ReorderService,
-  RowDDService, SelectionService, ContextMenuService
+  TreeGridComponent,
+  FreezeService,
+  PageService,
+  SortService,
+  FilterService,
+  ReorderService,
+  RowDDService,
+  SelectionService,
+  ContextMenuService,
 } from '@syncfusion/ej2-angular-treegrid';
 import { EditSettingsModel } from '@syncfusion/ej2-treegrid';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
@@ -13,16 +19,22 @@ import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { ChangeEventArgs } from '@syncfusion/ej2-dropdowns';
 import { dataInterface } from './sampleData';
 
-
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css'],
-  providers: [PageService, SortService, FilterService, ReorderService, FreezeService, RowDDService,
-    SelectionService, ContextMenuService]
+  providers: [
+    PageService,
+    SortService,
+    FilterService,
+    ReorderService,
+    FreezeService,
+    RowDDService,
+    SelectionService,
+    ContextMenuService,
+  ],
 })
 export class TaskComponent implements OnInit {
-
   @ViewChild('treegrid', { static: true })
   public treegrid: TreeGridComponent;
 
@@ -59,41 +71,41 @@ export class TaskComponent implements OnInit {
   public d2data: Object;
   public fields: Object;
   public height: string = '250px';
-  public columnName: any = 'taskID';
-  public colorName: any = "black";
-  public fweight: any = '400';
-  public fsize: any = '14';
-  public alignmentText: any = 'Right';
+  public columnName: string = 'taskID';
+  public colorName: string = 'black';
+  public fweight: string = '400';
+  public fsize: string = '14';
+  public alignmentText: string = 'Right';
   public columnValue: number = Browser.isDevice ? 1 : 2;
 
-  constructor() {
-
-  }
+  constructor() {}
 
   ngOnInit(): void {
     /**
      * For Passign Data onto the table
      * **/
-    this.data = data
+    this.data = data;
 
     /**
      * For sorting table
      * ***/
     this.initialSort = {
-      columns: [{ field: 'Freight', direction: 'Ascending' },
-      { field: 'CustomerName', direction: 'Descending' }]
+      columns: [
+        { field: 'Freight', direction: 'Ascending' },
+        { field: 'CustomerName', direction: 'Descending' },
+      ],
     };
 
     /****
      * For paging
      * ***/
-    this.pageSettings = { pageCount: 2, pageSizes: true }
+    this.pageSettings = { pageCount: 2, pageSizes: true };
 
     /****
      * For Multiselect
      * ****/
     this.selectOptions = {
-      type: 'Multiple'
+      type: 'Multiple',
       //  ,mode: 'Cell', cellSelectionMode: 'Box'
     };
 
@@ -101,42 +113,56 @@ export class TaskComponent implements OnInit {
      * Context Menu
      * *****/
     this.contextMenuItems = [
-      'Edit', 'Delete', 'Save', 'Cancel', 'AddRow',
+      'Edit',
+      'Delete',
+      'Save',
+      'Cancel',
+      'AddRow',
       { text: 'Copy', target: '.e-content', id: 'copyFile' },
       { text: 'Copy With Header', target: '.e-content', id: 'copyFileHeader' },
       { text: 'Cut', target: '.e-content', id: 'cutFile' },
       { text: 'Color', target: '.e-headercontent', id: 'color' },
       { text: 'Font', target: '.e-headercontent', id: 'fontId' },
-      { text: 'Alignment', target: '.e-headercontent', id: 'alignId' }
-    ]
+      { text: 'Alignment', target: '.e-headercontent', id: 'alignId' },
+    ];
 
     /****
-     * Alignment 
+     * Alignment
      * **/
 
-    this.d1data = [{ id: 'taskID', name: 'Task ID' }, { id: 'startDate', name: 'Start Date' },
-    { id: 'duration', name: 'Duration' }, { id: 'progress', name: 'Progress' }],
+    (this.d1data = [
+      { id: 'taskID', name: 'Task ID' },
+      { id: 'startDate', name: 'Start Date' },
+      { id: 'duration', name: 'Duration' },
+      { id: 'progress', name: 'Progress' },
+    ]),
+      (this.ddlfields = { text: 'name', value: 'id' });
 
-      this.ddlfields = { text: 'name', value: 'id' };
-
-    this.d2data = [{ id: 'Right', name: 'Right' }, { id: 'Left', name: 'Left' },
-    { id: 'Center', name: 'Center' }, { id: 'Justify', name: 'Justify' }],
-
-      this.fields = { text: 'name', value: 'id' };
+    (this.d2data = [
+      { id: 'Right', name: 'Right' },
+      { id: 'Left', name: 'Left' },
+      { id: 'Center', name: 'Center' },
+      { id: 'Justify', name: 'Justify' },
+    ]),
+      (this.fields = { text: 'name', value: 'id' });
 
     /****
      * Editing tool
      * *****/
-    this.editing = { allowDeleting: true, allowEditing: true, allowAdding: true, mode: 'Row' };
+    this.editing = {
+      allowDeleting: true,
+      allowEditing: true,
+      allowAdding: true,
+      mode: 'Row',
+    };
     this.editparams = { params: { format: 'n' } };
-
   }
 
-  initial:boolean = true;
+  initial: boolean = true;
   dataBound() {
     if (this.initial === true) {
-        this.treegrid.collapseAll();
-        this.initial = false;
+      this.treegrid.collapseAll();
+      this.initial = false;
     }
   }
 
@@ -144,7 +170,6 @@ export class TaskComponent implements OnInit {
   public btnClick(): void {
     this.treegrid.frozenRows = this.rows.value;
     this.treegrid.frozenColumns = this.columns.value;
-
   }
 
   public colorFunction(): void {
@@ -152,8 +177,7 @@ export class TaskComponent implements OnInit {
   }
 
   public fontFunction(): void {
-    this.fsize = `${this.fsize}px`
-    // console.log(this.fsize)
+    this.fsize = `${this.fsize}px`;
     this.template2.hide();
   }
 
@@ -163,20 +187,22 @@ export class TaskComponent implements OnInit {
 
   public onChange(e: ChangeEventArgs): void {
     this.columnName = <string>e.value;
-    let alignment: any = this.treegrid.getColumnByField(this.columnName).textAlign;
+    let alignment: any = this.treegrid.getColumnByField(
+      this.columnName
+    ).textAlign;
     this.dropdown2.value = alignment;
   }
 
   public change(e: ChangeEventArgs): void {
-    console.log(this.dropdown1)
-    let alignment: any = e.value;
+    console.log(this.dropdown1);
+    const alignment: any = e.value;
     try {
       this.treegrid.getColumnByField(this.columnName).textAlign = alignment;
       this.treegrid.refreshColumns();
-    } catch (e) { }
+    } catch (e) {}
   }
 
-  public contextMenuOpen(e: any): void {
+  public contextMenuOpen(e: MouseEvent): void {
     // console.log(e)
   }
   public contextMenuClick(e: any): void {
@@ -184,22 +210,17 @@ export class TaskComponent implements OnInit {
     this.treegrid.copyHierarchyMode = 'Parent';
     if (e.item.id === 'copyFile') {
       this.treegrid.copy();
-    }
-    else if (e.item.id === 'copyFileHeader') {
+    } else if (e.item.id === 'copyFileHeader') {
       this.treegrid.copy(true);
-    }
-    else if (e.item.id === 'color') {
+    } else if (e.item.id === 'color') {
       this.template1.show();
-    }
-    else if (e.item.id === 'fontId') {
+    } else if (e.item.id === 'fontId') {
       this.template2.show();
-    }
-    else if (e.item.id === 'alignId') {
+    } else if (e.item.id === 'alignId') {
       this.template3.show();
-    }
-    else if (e.item.id === 'cutFile') {
+    } else if (e.item.id === 'cutFile') {
       this.treegrid.copy(true);
-      this.treegrid.deleteRecord()
+      this.treegrid.deleteRecord();
     }
   }
 }
