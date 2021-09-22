@@ -1,0 +1,202 @@
+<header class="headerStyle">
+    <h1 class="textStyle">Task</h1>
+</header>
+<hr class="hrStyle">
+
+<br>
+<div class="control-section">
+
+    <!-- ******************frozen Property*********************** -->
+
+    <div>
+        <div class="property-panel-section">
+            <div class="property-panel-content">
+                <table id="property" class="property-panel-table" title="Properties" class="frozenStyle">
+
+                    <tr>
+                        <td>
+                            <b>Frozen Property:</b>
+                        </td>
+                    </tr>
+
+                    &nbsp;&nbsp;&nbsp;
+
+                    <tr>
+                        <td>
+                            <div>Frozen Rows</div>
+                        </td>
+                        <td>
+                            <div id='frozeninput'>
+                                <ejs-numerictextbox #rows min="0" max="5" format="n" value="0"></ejs-numerictextbox>
+                            </div>
+                        </td>
+                    </tr>
+
+                    &nbsp;&nbsp;&nbsp;
+
+                    <tr>
+                        <td>
+                            <div>Frozen Columns</div>
+                        </td>
+                        <td>
+                            <div id='frozeninput'>
+                                <ejs-numerictextbox #columns min="0" [max]="columnValue" format="n" value="0">
+                                </ejs-numerictextbox>
+                            </div>
+                        </td>
+                    </tr>
+                    &nbsp;&nbsp;&nbsp;
+                    <tr>
+                        <td>
+                            <div id='buttonSet'>
+                                <button style="background-color: blue;color: white;" ejs-button
+                                    (click)="btnClick()">Set</button>
+                            </div>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- ******************************************************* -->
+
+    <ejs-treegrid class="sortingenabled" #treegrid [dataSource]='data' childMapping='subtasks' height='450'
+        [treeColumnIndex]='1' allowSorting='true' allowFiltering='true' allowPaging='true' [allowResizing]='true'
+        allowReordering='true' [frozenRows]='0' [frozenColumns]='0' [allowRowDragAndDrop]='true'
+        [selectionSettings]='selectOptions' [pageSettings]='pageSettings' copyHierarchyMode='Parent'
+        [contextMenuItems]='contextMenuItems' [editSettings]='editing' (contextMenuOpen)="contextMenuOpen($event)"
+        (contextMenuClick)="contextMenuClick($event)" (dataBound)='dataBound()'>
+        <e-columns>
+            <e-column field='taskID' headerText='Task ID' isPrimaryKey='true' width='80' [edit]='editparams'
+                textAlign='Right' editType='numericedit'>
+                <ng-template #template let-data>
+                    <span
+                        [ngStyle]="{'color': colorName,'font-weight':fweight,'font-size':fsize}">{{data.taskID}}</span>
+                </ng-template>
+            </e-column>
+            <e-column field='taskName' headerText='Task Name' width='190' textAlign='Right'>
+                <ng-template #template let-data>
+                    <span
+                        [ngStyle]="{'color': colorName,'font-weight':fweight,'font-size':fsize}">{{data.taskName}}</span>
+                </ng-template>
+            </e-column>
+            <e-column field='startDate' headerText='Start Date' width='90' format="yMd" textAlign='Right'
+                editType='datepickeredit'>
+                <ng-template #template let-data>
+                    <span [ngStyle]="{'color': colorName,'font-weight':fweight,'font-size':fsize}">{{data.startDate |
+                        date: 'dd/MM/yyyy'}}</span>
+                </ng-template>
+            </e-column>
+            <e-column field='endDate' headerText='End Date' width='90' format="yMd" textAlign='Right'
+                editType='datepickeredit'>
+                <ng-template #template let-data>
+                    <span [ngStyle]="{'color': colorName,'font-weight':fweight,'font-size':fsize}">{{data.endDate |
+                        date: 'dd/MM/yyyy'}}</span>
+                </ng-template>
+            </e-column>
+            <e-column field='duration' headerText='Duration' width='85' [edit]='editparams' textAlign='Right'
+                editType='numericedit'>
+                <ng-template #template let-data>
+                    <span
+                        [ngStyle]="{'color': colorName,'font-weight':fweight,'font-size':fsize}">{{data.duration}}</span>
+                </ng-template>
+            </e-column>
+            <e-column field='progress' headerText='Progress' width='90' textAlign='Right' [edit]='editparams'
+                editType='numericedit'>
+                <ng-template #template let-data>
+                    <span
+                        [ngStyle]="{'color': colorName,'font-weight':fweight,'font-size':fsize}">{{data.progress}}</span>
+                </ng-template>
+            </e-column>
+            <e-column field='priority' headerText='Priority' width='80' textAlign='Left' editType='stringedit'>
+                <ng-template #template let-data>
+                    <span
+                        [ngStyle]="{'color': colorName,'font-weight':fweight,'font-size':fsize}">{{data.priority}}</span>
+                </ng-template>
+            </e-column>
+        </e-columns>
+    </ejs-treegrid>
+
+
+</div>
+
+<!-- Color Editor -->
+
+<ejs-dialog id='dialog' [visible]=false #template1 showCloseIcon='true' [height]='height' width='435px'>
+
+    <ng-template #header>
+        <div title="Nancy" class="e-icon-settings dlg-template"> Choose Your Font Color </div>
+    </ng-template>
+
+    <ng-template #content>
+        <h4>Select Color</h4>
+        <input [(ngModel)]="colorName" name="colorField" ejs-colorpicker type="color" id="element" mode="Palette" />
+    </ng-template>
+
+    <ng-template #footerTemplate>
+        <button (click)="colorFunction()">Choose Color</button>
+    </ng-template>
+
+</ejs-dialog>
+
+<!-- Font Style -->
+
+<ejs-dialog id='dialog' [visible]=false #template2 showCloseIcon='true' height='330px' width='435px'>
+
+    <ng-template #header>
+        <div title="Nancy" class="e-icon-settings dlg-template"> Choose Your Font style </div>
+    </ng-template>
+
+    <ng-template #content>
+        <h4>Font Weight</h4>
+        <div class='textboxes'>
+            <ejs-textbox [(ngModel)]="fweight" name="fweight" type="number" min="100" max="1000" step="100"
+                placeholder="Font Weight" showClearButton='true' floatLabelType="Never"></ejs-textbox>
+        </div>
+
+        <h4>Font Size</h4>
+        <div class='textboxes'>
+            <ejs-textbox [(ngModel)]="fsize" name="fsize" type="number" placeholder="Font Size" showClearButton='true'
+                floatLabelType="Auto"></ejs-textbox>
+        </div>
+    </ng-template>
+
+    <ng-template #footerTemplate>
+        <button (click)="fontFunction()">Font Style</button>
+    </ng-template>
+
+</ejs-dialog>
+
+
+<!-- Alignment Style -->
+
+<ejs-dialog id='dialog' [visible]=false #template3 showCloseIcon='true' height='330px' width='435px'>
+
+    <ng-template #header>
+        <div title="Nancy" class="e-icon-settings dlg-template"> Choose The Alignment style </div>
+    </ng-template>
+
+    <ng-template #content>
+
+        <h4>Choose The Column</h4>
+        <div style="width: 100%;padding: 10px 10px 10px 0px">
+            <ejs-dropdownlist #dropdown1 id='ddlelement' width='100px' [dataSource]='d1data' [fields]='ddlfields'
+                value='taskID' (change)="onChange($event)"></ejs-dropdownlist>
+        </div>
+
+        <br>
+
+        <h4>Choose The Alignment</h4>
+        <div style="width: 100%;padding: 10px 10px 10px 0px">
+            <ejs-dropdownlist #dropdown2 id='element' [dataSource]='d2data' [fields]='fields' value='Right'
+                (change)="change($event)"></ejs-dropdownlist>
+        </div>
+    </ng-template>
+
+    <ng-template #footerTemplate>
+        <button (click)="AlignmentFunction()">Alignment Style</button>
+    </ng-template>
+
+</ejs-dialog>

@@ -1,0 +1,44 @@
+.sortingenabled{
+    width: 95% !important;
+    margin: auto;
+}
+
+.headerStyle{    
+    background-color: blue;
+    height: 90px;
+    position: relative;
+    top: -23px;
+}
+
+.textStyle{
+    text-align: center;
+    top: 20px;
+    position: relative;
+    color: white;
+}
+
+.hrStyle{
+    position: relative;
+    top: -33px;
+}
+
+.frozenStyle{
+    display: flex
+}
+
+@media screen and (max-width: 590px) {
+    .sortingenabled {
+        margin-top: 30px;
+    }
+
+    .headerStyle{    
+        background-color: blue;
+        height: 90px;
+        position: relative;
+        top: -23px; 
+    }
+
+    .frozenStyle{
+        display:inline
+    }
+}
