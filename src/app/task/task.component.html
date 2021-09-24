@@ -17,7 +17,7 @@
 
                     &nbsp;&nbsp;&nbsp;
 
-                    <tr>
+                    <!-- <tr>
                         <td>
                             <div>Frozen Rows</div>
                         </td>
@@ -26,7 +26,7 @@
                                 <ejs-numerictextbox #rows min="0" max="5" format="n" value="0"></ejs-numerictextbox>
                             </div>
                         </td>
-                    </tr>
+                    </tr> -->
 
                     &nbsp;&nbsp;&nbsp;
 
@@ -59,87 +59,95 @@
     <!-- ******************************************************* -->
 
     <ejs-treegrid class="sortingenabled" #treegrid [dataSource]="data" childMapping="subtasks" height="450"
-        [treeColumnIndex]="1" allowSorting="true" allowFiltering="true" allowPaging="true" [allowResizing]="true"
+        [treeColumnIndex]="1" allowSorting="true" allowFiltering="true" [allowResizing]="true"
         allowReordering="true" [frozenRows]="0" [frozenColumns]="0" [allowRowDragAndDrop]="true"
         [selectionSettings]="selectOptions" [pageSettings]="pageSettings" copyHierarchyMode="Parent"
         [contextMenuItems]="contextMenuItems" [editSettings]="editing" (contextMenuOpen)="contextMenuOpen($event)"
         (contextMenuClick)="contextMenuClick($event)" (dataBound)="dataBound()">
         <e-columns>
-            <e-column field="taskID" headerText="Task ID" isPrimaryKey="true" width="80" [edit]="editparams"
+
+            <e-column field="taskID" headerText="Task ID" isPrimaryKey="true" width="150" [edit]="editparams"
                 textAlign="Right" editType="numericedit">
                 <ng-template #template let-data>
                     <span [ngStyle]="{
-              color: colorName,
-              'font-weight': fweight,
-              'font-size': fsize
+              color: taskIDcolorName,
+              'font-weight': taskIDfweight,
+              'font-size': taskIDfsize
             }">{{ data.taskID }}</span>
                 </ng-template>
             </e-column>
-            <e-column field="taskName" headerText="Task Name" width="190" textAlign="Right">
+
+            <e-column field="taskName" headerText="Task Name" width="250" textAlign="Right">
                 <ng-template #template let-data>
                     <span [ngStyle]="{
-              color: colorName,
-              'font-weight': fweight,
-              'font-size': fsize
+              color: taskNamecolorName,
+              'font-weight': taskNamefweight,
+              'font-size': taskNamefsize
             }">{{ data.taskName }}</span>
                 </ng-template>
             </e-column>
-            <e-column field="startDate" headerText="Start Date" width="90" format="yMd" textAlign="Right"
+
+            <e-column field="startDate" headerText="Start Date" width="150" format="yMd" textAlign="Right"
                 editType="datepickeredit">
                 <ng-template #template let-data>
                     <span [ngStyle]="{
-              color: colorName,
-              'font-weight': fweight,
-              'font-size': fsize
+              color: startDatecolorName,
+              'font-weight': startDatefweight,
+              'font-size': startDatefsize
             }">{{ data.startDate | date: "dd/MM/yyyy" }}</span>
                 </ng-template>
             </e-column>
-            <e-column field="endDate" headerText="End Date" width="90" format="yMd" textAlign="Right"
+
+            <e-column field="endDate" headerText="End Date" width="150" format="yMd" textAlign="Right"
                 editType="datepickeredit">
                 <ng-template #template let-data>
                     <span [ngStyle]="{
-              color: colorName,
-              'font-weight': fweight,
-              'font-size': fsize
+              color: endDatecolorName,
+              'font-weight': endDatefweight,
+              'font-size': endDatefsize
             }">{{ data.endDate | date: "dd/MM/yyyy" }}</span>
                 </ng-template>
             </e-column>
-            <e-column field="duration" headerText="Duration" width="85" [edit]="editparams" textAlign="Right"
+
+            <e-column field="duration" headerText="Duration" width="150" [edit]="editparams" textAlign="Right"
                 editType="numericedit">
                 <ng-template #template let-data>
                     <span [ngStyle]="{
-              color: colorName,
-              'font-weight': fweight,
-              'font-size': fsize
+              color: durationcolorName,
+              'font-weight': durationfweight,
+              'font-size': durationfsize
             }">{{ data.duration }}</span>
                 </ng-template>
             </e-column>
-            <e-column field="progress" headerText="Progress" width="90" textAlign="Right" [edit]="editparams"
+
+            <e-column field="progress" headerText="Progress" width="150" textAlign="Right" [edit]="editparams"
                 editType="numericedit">
                 <ng-template #template let-data>
                     <span [ngStyle]="{
-              color: colorName,
-              'font-weight': fweight,
-              'font-size': fsize
+              color: progresscolorName,
+              'font-weight': progressfweight,
+              'font-size': progressfsize
             }">{{ data.progress }}</span>
                 </ng-template>
             </e-column>
-            <e-column field="priority" headerText="Priority" width="80" textAlign="Left" editType="stringedit">
+
+            <e-column field="priority" headerText="Priority" width="190" textAlign="Left" editType="stringedit">
                 <ng-template #template let-data>
                     <span [ngStyle]="{
-              color: colorName,
-              'font-weight': fweight,
-              'font-size': fsize
+              color: prioritycolorName,
+              'font-weight': priorityfweight,
+              'font-size': priorityfsize
             }">{{ data.priority }}</span>
                 </ng-template>
             </e-column>
+
         </e-columns>
     </ejs-treegrid>
 </div>
 
 <!-- Color Editor -->
 
-<ejs-dialog id="dialog" [visible]="false" #template1 showCloseIcon="true" [height]="height" width="435px">
+<ejs-dialog id="dialog" [visible]="false" #template1 showCloseIcon="true" height="330px" width="435px">
     <ng-template #header>
         <div title="Nancy" class="e-icon-settings dlg-template">
             Choose Your Font Color
@@ -147,8 +155,17 @@
     </ng-template>
 
     <ng-template #content>
+        <h4>Choose The Column</h4>
+        <div style="width: 100%; padding: 10px 10px 10px 0px">
+            <ejs-dropdownlist #dropdown1 id="ddlelement" [dataSource]="d1data" [fields]="ddlfields" value="taskID"
+                (change)="onChange($event)"></ejs-dropdownlist>
+        </div>
+
+        <br />
+
         <h4>Select Color</h4>
-        <input [(ngModel)]="colorName" name="colorField" ejs-colorpicker type="color" id="element" mode="Palette" />
+        <input [(ngModel)]="colorName" name="colorField" (change)="ccolor()" ejs-colorpicker type="color" id="element"
+            mode="Palette" />
     </ng-template>
 
     <ng-template #footerTemplate>
@@ -158,7 +175,7 @@
 
 <!-- Font Style -->
 
-<ejs-dialog id="dialog" [visible]="false" #template2 showCloseIcon="true" height="330px" width="435px">
+<ejs-dialog id="dialog" [visible]="false" #template2 showCloseIcon="true" height="370px" width="435px">
     <ng-template #header>
         <div title="Nancy" class="e-icon-settings dlg-template">
             Choose Your Font style
@@ -166,16 +183,24 @@
     </ng-template>
 
     <ng-template #content>
+
+        <h4>Choose The Column</h4>
+        <div class="textboxes">
+            <ejs-dropdownlist #dropdown1 id="ddlelement" [dataSource]="d1data" [fields]="ddlfields" value="taskID"
+                (change)="onChange($event)"></ejs-dropdownlist>
+        </div>
+
         <h4>Font Weight</h4>
         <div class="textboxes">
             <ejs-textbox [(ngModel)]="fweight" name="fweight" type="number" min="100" max="1000" step="100"
-                placeholder="Font Weight" showClearButton="true" floatLabelType="Never"></ejs-textbox>
+                placeholder="Font Weight" (change)="FontHandle('fweight')" showClearButton="true"
+                floatLabelType="Never"></ejs-textbox>
         </div>
 
         <h4>Font Size</h4>
         <div class="textboxes">
-            <ejs-textbox [(ngModel)]="fsize" name="fsize" type="number" placeholder="Font Size" showClearButton="true"
-                floatLabelType="Auto"></ejs-textbox>
+            <ejs-textbox [(ngModel)]="fsize" (change)="FontHandle('fsize')" name="fsize" type="number"
+                placeholder="Font Size" showClearButton="true" floatLabelType="Auto"></ejs-textbox>
         </div>
     </ng-template>
 
@@ -196,8 +221,8 @@
     <ng-template #content>
         <h4>Choose The Column</h4>
         <div style="width: 100%; padding: 10px 10px 10px 0px">
-            <ejs-dropdownlist #dropdown1 id="ddlelement" width="100px" [dataSource]="d1data" [fields]="ddlfields"
-                value="taskID" (change)="onChange($event)"></ejs-dropdownlist>
+            <ejs-dropdownlist #dropdown1 id="ddlelement" [dataSource]="d1data" [fields]="ddlfields" value="taskID"
+                (change)="onChange($event)"></ejs-dropdownlist>
         </div>
 
         <br />

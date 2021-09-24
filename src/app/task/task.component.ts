@@ -70,15 +70,36 @@ export class TaskComponent implements OnInit {
   public ddlfields: Object;
   public d2data: Object;
   public fields: Object;
+  public taskIDcolorName: any;
+  public taskNamecolorName: any;
+  public startDatecolorName: any;
+  public endDatecolorName: any;
+  public durationcolorName: any;
+  public progresscolorName: any;
+  public prioritycolorName: any
+  public taskIDfweight: any;
+  public taskIDfsize: any;
+  public taskNamefweight: any;
+  public taskNamefsize: any;
+  public startDatefweight: any;
+  public endDatefweight: any;
+  public durationfweight: any;
+  public progressfweight: any;
+  public priorityfweight: any
+  public startDatefsize: any;
+  public endDatefsize: any;
+  public durationfsize: any;
+  public progressfsize: any;
+  public priorityfsize: any
   public height: string = '250px';
   public columnName: string = 'taskID';
   public colorName: string = 'black';
   public fweight: string = '400';
   public fsize: string = '14';
   public alignmentText: string = 'Right';
-  public columnValue: number = Browser.isDevice ? 1 : 2;
+  public columnValue: number = Browser.isDevice ? 1 : 6;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     /**
@@ -105,7 +126,7 @@ export class TaskComponent implements OnInit {
      * For Multiselect
      * ****/
     this.selectOptions = {
-      type: 'Multiple',
+      type: 'Multiple'
       //  ,mode: 'Cell', cellSelectionMode: 'Box'
     };
 
@@ -121,6 +142,7 @@ export class TaskComponent implements OnInit {
       { text: 'Copy', target: '.e-content', id: 'copyFile' },
       { text: 'Copy With Header', target: '.e-content', id: 'copyFileHeader' },
       { text: 'Cut', target: '.e-content', id: 'cutFile' },
+      // { text: 'Paste', target: '.e-content', id: 'pasteFile' },
       { text: 'Color', target: '.e-headercontent', id: 'color' },
       { text: 'Font', target: '.e-headercontent', id: 'fontId' },
       { text: 'Alignment', target: '.e-headercontent', id: 'alignId' },
@@ -132,9 +154,12 @@ export class TaskComponent implements OnInit {
 
     (this.d1data = [
       { id: 'taskID', name: 'Task ID' },
+      { id: 'taskName', name: 'Task Name' },
       { id: 'startDate', name: 'Start Date' },
+      { id: 'endDate', name: 'End Date' },
       { id: 'duration', name: 'Duration' },
       { id: 'progress', name: 'Progress' },
+      { id: 'priority', name: 'Priority' }
     ]),
       (this.ddlfields = { text: 'name', value: 'id' });
 
@@ -153,7 +178,8 @@ export class TaskComponent implements OnInit {
       allowDeleting: true,
       allowEditing: true,
       allowAdding: true,
-      mode: 'Row',
+      showDeleteConfirmDialog: true,
+      mode: 'Row'
     };
     this.editparams = { params: { format: 'n' } };
   }
@@ -168,7 +194,7 @@ export class TaskComponent implements OnInit {
 
   //After clicking 'Set' button, the `frozenRows` and `frozenColumns` values will be updated in Grid.
   public btnClick(): void {
-    this.treegrid.frozenRows = this.rows.value;
+    // this.treegrid.frozenRows = this.rows.value;
     this.treegrid.frozenColumns = this.columns.value;
   }
 
@@ -185,21 +211,98 @@ export class TaskComponent implements OnInit {
     this.template3.hide();
   }
 
+  public ccolor() {
+    if (this.columnName == 'taskID') {
+      this.taskIDcolorName = this.colorName
+    }
+    else if (this.columnName == 'taskName') {
+      this.taskNamecolorName = this.colorName
+    }
+    else if (this.columnName == 'startDate') {
+      this.startDatecolorName = this.colorName
+    }
+    else if (this.columnName == 'endDate') {
+      this.endDatecolorName = this.colorName
+    }
+    else if (this.columnName == 'duration') {
+      this.durationcolorName = this.colorName
+    }
+    else if (this.columnName == 'progress') {
+      this.progresscolorName = this.colorName
+    }
+    else if (this.columnName == 'priority') {
+      this.prioritycolorName = this.colorName
+    }
+  }
+
+
+  public FontHandle(e) {
+    // console.log("ggg",e.target)
+    if (e === 'fweight') {
+      if (this.columnName == 'taskID') {
+        this.taskIDfweight = this.fweight;
+      }
+      else if (this.columnName === 'taskName') {
+        this.taskNamefweight = this.fweight;
+      }
+      else if (this.columnName === 'startDate') {
+        this.startDatefweight = this.fweight;
+      }
+      else if (this.columnName === 'endDate') {
+        this.endDatefweight = this.fweight;
+      }
+      else if (this.columnName === 'duration') {
+        this.durationfweight = this.fweight;
+      }
+      else if (this.columnName === 'progress') {
+        this.progressfweight = this.fweight;
+      }
+      else if (this.columnName === 'priority') {
+        this.priorityfweight = this.fweight;
+      }
+    }
+    else if (e === 'fsize') {
+      if (this.columnName == 'taskID') {
+        this.taskIDfsize = `${this.fsize}px`;
+      }
+      else if (this.columnName === 'taskName') {
+        this.taskNamefsize = `${this.fsize}px`;
+      }
+      else if (this.columnName === 'startDate') {
+        this.startDatefsize = `${this.fsize}px`;
+      }
+      else if (this.columnName === 'endDate') {
+        this.endDatefsize = `${this.fsize}px`;
+      }
+      else if (this.columnName === 'duration') {
+        this.durationfsize = `${this.fsize}px`;
+      }
+      else if (this.columnName === 'progress') {
+        this.progressfsize = `${this.fsize}px`;
+      }
+      else if (this.columnName === 'priority') {
+        this.priorityfsize = `${this.fsize}px`;
+      }
+    }
+  }
+
   public onChange(e: ChangeEventArgs): void {
-    this.columnName = <string>e.value;
-    let alignment: any = this.treegrid.getColumnByField(
-      this.columnName
-    ).textAlign;
-    this.dropdown2.value = alignment;
+    try {
+      this.columnName = <string>e.value;
+      let alignment: any = this.treegrid.getColumnByField(
+        this.columnName
+      ).textAlign;
+      this.dropdown2.value = alignment;
+    } catch (e) { }
   }
 
   public change(e: ChangeEventArgs): void {
-    console.log(this.dropdown1);
+    // console.log(this.dropdown1);
     const alignment: any = e.value;
     try {
       this.treegrid.getColumnByField(this.columnName).textAlign = alignment;
       this.treegrid.refreshColumns();
-    } catch (e) {}
+    } catch (e) { }
   }
 
   public contextMenuOpen(e: MouseEvent): void {
@@ -219,8 +322,11 @@ export class TaskComponent implements OnInit {
     } else if (e.item.id === 'alignId') {
       this.template3.show();
     } else if (e.item.id === 'cutFile') {
-      this.treegrid.copy(true);
-      this.treegrid.deleteRecord();
+      this.treegrid.copy();
+      this.treegrid.deleteRecord()
+    }
+    else if (e.item.id === 'pasteFile') {
+      this.treegrid.addRecord()
     }
   }
 }
