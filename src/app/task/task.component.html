@@ -67,7 +67,7 @@
         <e-columns>
 
             <e-column field="taskID" headerText="Task ID" isPrimaryKey="true" width="150" [edit]="editparams"
-                textAlign="Right" editType="numericedit">
+                textAlign="Left" editType="numericedit">
                 <ng-template #template let-data>
                     <span [ngStyle]="{
               color: taskIDcolorName,
@@ -77,7 +77,7 @@
                 </ng-template>
             </e-column>
 
-            <e-column field="taskName" headerText="Task Name" width="250" textAlign="Right">
+            <e-column field="taskName" headerText="Task Name" width="250" textAlign="Left">
                 <ng-template #template let-data>
                     <span [ngStyle]="{
               color: taskNamecolorName,
