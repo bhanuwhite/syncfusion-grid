@@ -59,6 +59,15 @@ export class TaskComponent implements OnInit {
   @ViewChild('template3', { static: true })
   template3: DialogComponent;
 
+  @ViewChild('template4', { static: true })
+  template4: DialogComponent;
+
+  @ViewChild('sample')
+  public listObj: DropDownListComponent;
+
+  public sportsData: Object;
+  public fieldsWrap: Object;
+  public value: string = 'break-word';
   public data: dataInterface[];
   public initialSort: Object;
   public pageSettings: Object;
@@ -90,7 +99,14 @@ export class TaskComponent implements OnInit {
   public endDatefsize: any;
   public durationfsize: any;
   public progressfsize: any;
-  public priorityfsize: any
+  public priorityfsize: any;
+  public taskIDWrap:any
+  public taskNameWrap:any;
+  public startDateWrap:any;
+  public endDateWrap:any;
+  public durationWrap:any;
+  public progressWrap:any;
+  public priorityWrap:any;
   public height: string = '250px';
   public columnName: string = 'taskID';
   public colorName: string = 'black';
@@ -146,6 +162,7 @@ export class TaskComponent implements OnInit {
       { text: 'Color', target: '.e-headercontent', id: 'color' },
       { text: 'Font', target: '.e-headercontent', id: 'fontId' },
       { text: 'Alignment', target: '.e-headercontent', id: 'alignId' },
+      { text: 'Text Wrap', target: '.e-headercontent', id: 'textWrapId' },
     ];
 
     /****
@@ -170,6 +187,18 @@ export class TaskComponent implements OnInit {
       { id: 'Justify', name: 'Justify' },
     ]),
       (this.fields = { text: 'name', value: 'id' });
+
+
+    // define the JSON of data
+    (this.sportsData = [
+      { Id: 'break-word', Game: 'break-word' },
+      { Id: 'inherit', Game: 'inherit' },
+      { Id: 'initial', Game: 'initial' },
+      { Id: 'normal', Game: 'normal' },
+      { Id: 'revert', Game: 'revert' },
+      { Id: 'unset', Game: 'unset' },
+    ]),
+      (this.fieldsWrap = { text: 'Game', value: 'Id' })
 
     /****
      * Editing tool
@@ -205,6 +234,10 @@ export class TaskComponent implements OnInit {
   public fontFunction(): void {
     this.fsize = `${this.fsize}px`;
     this.template2.hide();
+  }
+
+  public wrapFunction():void{
+    this.template4.hide();
   }
 
   public AlignmentFunction(): void {
@@ -305,6 +338,30 @@ export class TaskComponent implements OnInit {
     } catch (e) { }
   }
 
+  public onChangeWrap(e:ChangeEventArgs):void {
+    if (this.columnName == 'taskID') {
+      this.taskIDWrap = e.value;
+    }
+    else if (this.columnName === 'taskName') {
+      this.taskNameWrap = e.value;
+    }
+    else if (this.columnName === 'startDate') {
+      this.startDateWrap = e.value;
+    }
+    else if (this.columnName === 'endDate') {
+      this.endDateWrap = e.value;
+    }
+    else if (this.columnName === 'duration') {
+      this.durationWrap = e.value;
+    }
+    else if (this.columnName === 'progress') {
+      this.progressWrap = e.value;
+    }
+    else if (this.columnName === 'priority') {
+      this.priorityWrap = e.value;
+    }
+  }
+
   public contextMenuOpen(e: MouseEvent): void {
     // console.log(e)
   }
@@ -321,7 +378,10 @@ export class TaskComponent implements OnInit {
       this.template2.show();
     } else if (e.item.id === 'alignId') {
       this.template3.show();
-    } else if (e.item.id === 'cutFile') {
+    } else if (e.item.id === 'textWrapId') {
+      this.template4.show();
+    }
+    else if (e.item.id === 'cutFile') {
       this.treegrid.copy();
       this.treegrid.deleteRecord()
     }

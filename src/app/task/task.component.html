@@ -58,8 +58,8 @@
     <br />
     <!-- ******************************************************* -->
 
-    <ejs-treegrid class="sortingenabled" #treegrid [dataSource]="data" childMapping="subtasks" height="450"
-        [treeColumnIndex]="1" allowSorting="true" allowFiltering="true" [allowResizing]="true"
+    <ejs-treegrid allowTextWrap='true' class="sortingenabled" #treegrid [dataSource]="data" childMapping="subtasks"
+        height="450" [treeColumnIndex]="1" allowSorting="true" allowFiltering="true" [allowResizing]="true"
         allowReordering="true" [frozenRows]="0" [frozenColumns]="0" [allowRowDragAndDrop]="true"
         [selectionSettings]="selectOptions" [pageSettings]="pageSettings" copyHierarchyMode="Parent"
         [contextMenuItems]="contextMenuItems" [editSettings]="editing" (contextMenuOpen)="contextMenuOpen($event)"
@@ -72,7 +72,8 @@
                     <span [ngStyle]="{
               color: taskIDcolorName,
               'font-weight': taskIDfweight,
-              'font-size': taskIDfsize
+              'font-size': taskIDfsize,
+              'word-wrap': taskIDWrap
             }">{{ data.taskID }}</span>
                 </ng-template>
             </e-column>
@@ -82,7 +83,8 @@
                     <span [ngStyle]="{
               color: taskNamecolorName,
               'font-weight': taskNamefweight,
-              'font-size': taskNamefsize
+              'font-size': taskNamefsize,
+              'word-wrap': taskNameWrap
             }">{{ data.taskName }}</span>
                 </ng-template>
             </e-column>
@@ -93,7 +95,8 @@
                     <span [ngStyle]="{
               color: startDatecolorName,
               'font-weight': startDatefweight,
-              'font-size': startDatefsize
+              'font-size': startDatefsize,
+              'word-wrap': startDateWrap
             }">{{ data.startDate | date: "dd/MM/yyyy" }}</span>
                 </ng-template>
             </e-column>
@@ -104,7 +107,8 @@
                     <span [ngStyle]="{
               color: endDatecolorName,
               'font-weight': endDatefweight,
-              'font-size': endDatefsize
+              'font-size': endDatefsize,
+              'word-wrap': endDateWrap
             }">{{ data.endDate | date: "dd/MM/yyyy" }}</span>
                 </ng-template>
             </e-column>
@@ -115,7 +119,8 @@
                     <span [ngStyle]="{
               color: durationcolorName,
               'font-weight': durationfweight,
-              'font-size': durationfsize
+              'font-size': durationfsize,
+              'word-wrap': durationWrap
             }">{{ data.duration }}</span>
                 </ng-template>
             </e-column>
@@ -126,7 +131,8 @@
                     <span [ngStyle]="{
               color: progresscolorName,
               'font-weight': progressfweight,
-              'font-size': progressfsize
+              'font-size': progressfsize,
+              'word-wrap': progressWrap
             }">{{ data.progress }}</span>
                 </ng-template>
             </e-column>
@@ -136,7 +142,8 @@
                     <span [ngStyle]="{
               color: prioritycolorName,
               'font-weight': priorityfweight,
-              'font-size': priorityfsize
+              'font-size': priorityfsize,
+              'word-wrap': priorityWrap
             }">{{ data.priority }}</span>
                 </ng-template>
             </e-column>
@@ -147,7 +154,8 @@
 
 <!-- Color Editor -->
 
-<ejs-dialog id="dialog" [visible]="false" #template1 showCloseIcon="true" height="330px" width="435px">
+<ejs-dialog class="dialogOption" id="dialog" [visible]="false" #template1 showCloseIcon="true" height="330px"
+    width="435px">
     <ng-template #header>
         <div title="Nancy" class="e-icon-settings dlg-template">
             Choose Your Font Color
@@ -175,7 +183,8 @@
 
 <!-- Font Style -->
 
-<ejs-dialog id="dialog" [visible]="false" #template2 showCloseIcon="true" height="370px" width="435px">
+<ejs-dialog class="dialogOption" id="dialog" [visible]="false" #template2 showCloseIcon="true" height="370px"
+    width="435px">
     <ng-template #header>
         <div title="Nancy" class="e-icon-settings dlg-template">
             Choose Your Font style
@@ -211,7 +220,8 @@
 
 <!-- Alignment Style -->
 
-<ejs-dialog id="dialog" [visible]="false" #template3 showCloseIcon="true" height="330px" width="435px">
+<ejs-dialog class="dialogOption" id="dialog" [visible]="false" #template3 showCloseIcon="true" height="330px"
+    width="435px">
     <ng-template #header>
         <div title="Nancy" class="e-icon-settings dlg-template">
             Choose The Alignment style
@@ -236,5 +246,37 @@
 
     <ng-template #footerTemplate>
         <button (click)="AlignmentFunction()">Alignment Style</button>
+    </ng-template>
+</ejs-dialog>
+
+<!-- text wrap -->
+
+<ejs-dialog class="dialogOption" id="dialog" [visible]="false" #template4 showCloseIcon="true" height="370px"
+    width="435px">
+    <ng-template #header>
+        <div title="Nancy" class="e-icon-settings dlg-template">
+            Choose Text Wrap
+        </div>
+    </ng-template>
+
+    <ng-template #content>
+
+        <h4>Choose The Column</h4>
+        <div class="textboxes">
+            <ejs-dropdownlist #dropdown1 id="ddlelement" [dataSource]="d1data" [fields]="ddlfields" value="taskID"
+                (change)="onChange($event)"></ejs-dropdownlist>
+        </div>
+        <br>
+
+        <h4>Choose The Style</h4>
+        <div class="textboxes">
+            <ejs-dropdownlist id='games' #sample [dataSource]='sportsData' (change)='onChangeWrap($event)'
+                [value]='value' [fields]='fieldsWrap'></ejs-dropdownlist>
+        </div>
+
+    </ng-template>
+
+    <ng-template #footerTemplate>
+        <button (click)="wrapFunction()">Text Wrap</button>
     </ng-template>
 </ejs-dialog>
